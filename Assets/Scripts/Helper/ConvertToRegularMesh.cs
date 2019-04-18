@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class ConvertToRegularMesh : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[ContextMenu("Convert to regular mesh")]
+	private void Convert()
+	{
+		SkinnedMeshRenderer skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
+		MeshRenderer meshRenderer = gameObject.AddComponent<MeshRenderer>();
+		MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		meshFilter.sharedMesh = skinnedMeshRenderer.sharedMesh;
+		meshRenderer.sharedMaterials = skinnedMeshRenderer.sharedMaterials;
+
+		DestroyImmediate( skinnedMeshRenderer );
+		DestroyImmediate( this );
+	}
 }
